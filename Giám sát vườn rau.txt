@@ -1,0 +1,67 @@
+Ý tưởng hệ thống giám sát và tưới tiêu tự động cho vườn rau với tính năng nhận dạng AI cho cây trồng:
+
+1. Thiết bị và công cụ cần thiết:
+- Board Adafruit Feather M0 WiFi hoặc LoRa
+- Cảm biến độ ẩm đất Adafruit STEMMA
+- Cảm biến nhiệt độ và ánh sáng Adafruit BME280  
+- Rơle Adafruit để điều khiển bơm nước và van điện từ
+- Bơm nước 12V, van điện từ 12V
+- Dây nối, pin/nguồn 5V
+- Camera IP giám sát vườn kết nối WiFi
+- Raspberry Pi làm server gateway
+- Cloud server hoặc VPS để lưu trữ, xử lý dữ liệu và chạy mô hình AI
+
+2. Lắp đặt phần cứng:
+- Nối cảm biến độ ẩm đất, nhiệt độ/ánh sáng với board Adafruit
+- Nối rơle với board, rơle điều khiển bơm và van nước
+- Đặt cảm biến độ ẩm đất ở vị trí phù hợp trong vườn 
+- Đấu nối bơm nước, van nước với rơle
+- Đặt camera giám sát ở vị trí quan sát toàn bộ khu vực vườn
+
+3. Lập trình phần mềm tại board Adafruit:
+- Viết mã đọc dữ liệu từ các cảm biến 
+- Thiết lập ngưỡng độ ẩm đất mong muốn, thời gian tưới
+- Khi độ ẩm đất thấp hơn ngưỡng, gửi lệnh mở bơm và van nước
+- Đóng van sau khi đủ thời gian tưới  
+- Kết nối và nhận ảnh định kỳ từ camera giám sát
+- Gửi dữ liệu cảm biến và ảnh về server gateway qua WiFi/LoRa
+
+4. Thiết lập Server Gateway trên Raspberry Pi:
+- Cài đặt MQTT Broker như Mosquitto
+- Viết script để đăng ký làm subscribe từ board Adafruit  
+- Nhận dữ liệu cảm biến và ảnh từ board qua MQTT
+- Lưu dữ liệu vào database local trên Raspberry Pi
+- Chuyển tiếp ảnh lên Cloud server để nhận dạng AI  
+
+5. Cài đặt Cloud Server:
+- Dùng Cloud Server hoặc VPS 
+- Cài đặt MQTT Broker để nhận dữ liệu từ Raspberry Pi
+- Cài đặt Web Server, Database như MySQL
+- Triển khai mô hình AI nhận dạng bệnh, tình trạng trên cây 
+- Viết Web API để lấy, xử lý dữ liệu cảm biến
+- Web API gửi ảnh tới mô hình AI, nhận kết quả phân tích
+
+6. Phát triển Mobile App:
+- Sử dụng framework như React Native
+- App kết nối đến Web API trên Cloud Server  
+- Hiển thị dữ liệu cảm biến dưới dạng biểu đồ
+- Hiển thị ảnh vườn và kết quả phân tích từ mô hình AI
+- Đặt điều kiện tưới nước tự động dựa trên ngưỡng cảm biến
+- Gửi lệnh tưới tiêu đặc biệt khi cây bị bệnh/thiếu dinh dưỡng
+- Hiển thị hướng dẫn chữa trị cho từng loại bệnh/vấn đề
+
+7. Điều kiện kích hoạt hệ thống:
+- Độ ẩm đất thấp hơn ngưỡng -> Kích hoạt tưới tự động
+- Mô hình AI phát hiện bệnh/vấn đề trên cây -> Cảnh báo người dùng
+  - Người dùng xác nhận bệnh/vấn đề -> Kích hoạt tưới tiêu đặc biệt
+  - App gợi ý cách chữa trị cho từng loại bệnh/vấn đề
+
+Quy trình hoạt động:
+- Cảm biến đo độ ẩm, nhiệt độ, camera chụp ảnh vườn cây
+- Board gửi cảm biến, ảnh về Pi qua WiFi/LoRa 
+- Pi đẩy dữ liệu lên Cloud, gửi ảnh qua AI nhận dạng
+- Cloud cung cấp Web API với dữ liệu, kết quả AI cho App
+- App hiển thị, cảnh báo người dùng nếu phát hiện bất thường
+- Người dùng kích hoạt tưới tiêu đặc biệt, theo gợi ý chữa trị
+
+Với các bước thực hiện và điều kiện kích hoạt cụ thể, hệ thống này đảm bảo tưới nước tự động dựa trên ngưỡng cảm biến. Đồng thời sử dụng AI giám sát sức khỏe cây, phát hiện sớm vấn đề, hỗ trợ quyết định tưới tiêu, chữa trị để nâng cao năng suất vườn rau.
