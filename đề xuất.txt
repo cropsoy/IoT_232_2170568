@@ -1,0 +1,50 @@
+1. **Thiết bị và công cụ cần thiết**:
+- Board Adafruit Feather M0 WiFi hoặc LoRa
+- Cảm biến độ ẩm đất Adafruit STEMMA 
+- Cảm biến nhiệt độ và ánh sáng Adafruit BME280
+- Rơle Adafruit để điều khiển bơm nước và van điện từ
+- Bơm nước 12V, van điện từ 12V
+- Dây nối, pin/nguồn 5V 
+- Raspberry Pi làm server gateway
+- Cloud server hoặc VPS để lưu trữ và xử lý dữ liệu
+
+2. **Lắp đặt phần cứng**:
+- Nối cảm biến độ ẩm đất, nhiệt độ/ánh sáng với board Adafruit
+- Nối rơle với board, rơle điều khiển bơm và van nước
+- Đặt cảm biến độ ẩm đất ở vị trí phù hợp trong vườn
+- Đấu nối bơm nước, van nước với rơle
+
+3. **Lập trình phần mềm tại board Adafruit**:
+- Viết mã đọc dữ liệu từ các cảm biến
+- Thiết lập ngưỡng độ ẩm đất, thời gian tưới
+- Khi độ ẩm đất thấp, gửi lệnh mở bơm và van nước
+- Đóng van sau khi đủ thời gian tưới
+- Gửi dữ liệu cảm biến về server gateway qua WiFi/LoRa
+
+4. **Thiết lập Server Gateway trên Raspberry Pi**:
+- Cài đặt MQTT Broker như Mosquitto
+- Viết script để đăng ký làm subscribe từ board Adafruit
+- Nhận dữ liệu cảm biến từ board qua MQTT
+- Lưu dữ liệu vào database local trên Pi
+
+5. **Cài đặt Cloud Server**:
+- Dùng Cloud Server hoặc VPS để lưu trữ dữ liệu lâu dài
+- Cài đặt MQTT Broker để nhận dữ liệu từ Pi
+- Cài đặt Web Server, Database như MySQL
+- Viết Web API bằng Node.js/Python để lấy, xử lý dữ liệu
+
+6. **Phát triển Mobile App**:
+- Sử dụng framework phát triển như React Native
+- App kết nối đến Web API trên Cloud Server
+- Hiển thị dữ liệu cảm biến dưới dạng biểu đồ
+- Cho phép người dùng đặt điều kiện tưới nước
+- Gửi yêu cầu bật/tắt hệ thống tưới về server
+
+Quy trình hoạt động:
+- Cảm biến đo độ ẩm đất, nhiệt độ, ánh sáng
+- Board Adafruit gửi dữ liệu về Pi qua WiFi/LoRa
+- Pi nhận và lưu lại dữ liệu, đẩy tiếp lên Cloud Server
+- Cloud lưu dữ liệu, cung cấp Web API cho Mobile App
+- Người dùng theo dõi, điều khiển qua App
+
+Quy trình này đảm bảo hệ thống hoạt động tự động với việc tưới nước được kích hoạt dựa trên ngưỡng cảm biến. Đồng thời cho phép giám sát và can thiệp từ xa qua mobile app.
