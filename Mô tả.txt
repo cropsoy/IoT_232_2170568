@@ -1,0 +1,44 @@
+Mô tả chi tiết và logic hoạt động:
+
+1. Phần cứng:
+   - Board Adafruit Feather: Vi điều khiển kết nối với các cảm biến đo độ ẩm đất, nhiệt độ, ánh sáng và điều khiển bơm nước, van nước.
+   - Cảm biến độ ẩm đất, nhiệt độ, ánh sáng: Thu thập dữ liệu môi trường vườn rau.
+   - Bơm nước và van nước: Điều khiển nước tưới tiêu theo lệnh từ board.
+   - Camera IP: Chụp ảnh toàn cảnh vườn rau để giám sát và nhận dạng AI.
+   - Raspberry Pi: Đóng vai trò server gateway, kết nối với board và Cloud.
+
+2. Phần mềm trên board Adafruit:
+   - Đọc dữ liệu từ các cảm biến.
+   - So sánh độ ẩm đất với ngưỡng đã thiết lập, kích hoạt tưới nước nếu cần.
+   - Điều khiển bật/tắt bơm nước và van nước thông qua rơle.
+   - Kết nối MQTT Client, gửi dữ liệu cảm biến lên MQTT Broker trên Raspberry Pi.
+   - Nhận ảnh từ camera IP, gửi lên MQTT Broker.
+
+3. Raspberry Pi Gateway:
+   - Chạy MQTT Broker (Mosquitto) để nhận dữ liệu từ board Adafruit.
+   - MQTT Forwarder (script Node.js) đăng ký nhận dữ liệu từ MQTT Broker.
+   - MQTT Forwarder chuyển tiếp dữ liệu lên MQTT Broker trên Cloud Server.
+
+4. Cloud Server:
+   - Chạy MQTT Broker để nhận dữ liệu từ Raspberry Pi Gateway.
+   - Web Server lưu trữ dữ liệu cảm biến và ảnh vào Database.
+   - Mô hình AI nhận dạng cây trồng dựa trên ảnh, phân tích bệnh và tình trạng cây.
+   - Web API cung cấp dữ liệu cảm biến, kết quả phân tích AI cho ứng dụng di động.
+
+5. Ứng dụng di động:
+   - Kết nối với Web API trên Cloud Server.
+   - Hiển thị dữ liệu cảm biến dưới dạng biểu đồ.
+   - Hiển thị ảnh vườn rau và kết quả phân tích từ mô hình AI.
+   - Cho phép người dùng thiết lập ngưỡng tưới nước tự động.
+   - Cảnh báo và gợi ý cách chữa trị khi AI phát hiện bệnh/vấn đề trên cây.
+   - Kích hoạt tưới tiêu đặc biệt theo yêu cầu của người dùng.
+
+Logic hoạt động:
+
+1. Board Adafruit đọc dữ liệu cảm biến, gửi lên MQTT Broker trên Raspberry Pi.
+2. Raspberry Pi nhận dữ liệu, chuyển tiếp lên MQTT Broker trên Cloud.
+3. Cloud Server lưu dữ liệu vào Database, gửi ảnh qua mô hình AI nhận dạng.
+4. Web API cung cấp dữ liệu và kết quả phân tích AI cho ứng dụng di động.
+5. Ứng dụng hiển thị dữ liệu, cảnh báo người dùng nếu có bất thường.
+6. Nếu độ ẩm đất thấp hơn ngưỡng, board kích hoạt tưới nước tự động.
+7. Nếu AI phát hiện bệnh/vấn đề, người dùng xác nhận và kích hoạt tưới tiêu đặc biệt trên ứng dụng, đồng thời nhận hướng dẫn chữa trị.
