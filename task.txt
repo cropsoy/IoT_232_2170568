@@ -1,0 +1,34 @@
+Bình - Lập trình Embedded (Board Adafruit):
+- Viết mã đọc dữ liệu từ các cảm biến độ ẩm đất, nhiệt độ, ánh sáng
+- Xử lý logic để kiểm tra ngưỡng độ ẩm, kích hoạt bơm nước và van nước
+- Cài đặt giao thức MQTT để gửi dữ liệu cảm biến và nhận ảnh từ camera lên Raspberry Pi
+- Sử dụng thư viện hỗ trợ sẵn cho cảm biến và giao tiếp MQTT
+
+Tâm - Cài đặt và lập trình Raspberry Pi Server Gateway:
+- Cài đặt MQTT Broker như Mosquitto trên Raspberry Pi
+- Viết script đăng ký làm subscriber để nhận dữ liệu từ Board Adafruit
+- Xử lý và lưu dữ liệu vào database local
+- Viết script kết nối MQTT để đẩy ảnh lên Cloud Server
+- Cấu hình kết nối WiFi/Internet trên Raspberry Pi
+
+Sang - Lập trình Cloud Server và cài đặt Web/Mobile App:
+- Cài đặt MQTT Broker, Web Server, Database như MySQL trên Cloud Server
+- Viết Web API để nhận dữ liệu cảm biến từ Raspberry Pi
+- Triển khai mô hình AI nhận dạng bệnh, tình trạng cây trồng
+- Viết API để gửi ảnh qua mô hình AI và nhận kết quả phân tích
+- Phát triển Web App hoặc Mobile App (React Native) để hiển thị dữ liệu, hướng dẫn chữa trị
+- Tích hợp Web API với App để lấy dữ liệu, kết quả AI và gửi lệnh tưới tiêu
+
+liên kết các module như sau:
+
+1. Board Adafruit <-> Raspberry Pi: Sử dụng giao thức MQTT
+   - Board Adafruit publish dữ liệu cảm biến và ảnh camera
+   - Raspberry Pi subscribe để nhận dữ liệu và ảnh
+
+2. Raspberry Pi <-> Cloud Server: Sử dụng giao thức MQTT
+   - Raspberry Pi publish ảnh lên Cloud Server
+   - Cloud Server nhận và xử lý ảnh qua mô hình AI
+
+3. Cloud Server <-> Web/Mobile App: Sử dụng Web API
+   - Cloud Server cung cấp API để lấy dữ liệu cảm biến, kết quả AI
+   - App gọi API để hiển thị dữ liệu, kết quả AI và gửi lệnh tưới tiêu
