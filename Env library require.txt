@@ -1,2 +1,2 @@
-pip install tensorflow==2.10.0, adafruit-io, keras, Pillow, numpy, opencv-python, pyserial
+pip install tensorflow==2.10.0, adafruit-io, keras, Pillow, numpy, opencv-python, pyserial, tk
 
